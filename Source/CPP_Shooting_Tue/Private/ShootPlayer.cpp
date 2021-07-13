@@ -45,6 +45,9 @@ AShootPlayer::AShootPlayer()
 	playerMove = CreateDefaultSubobject<UPlayerMove>(TEXT("PlayerMove"));
 	playerFire = CreateDefaultSubobject<UPlayerFire>(TEXT("PlayerFire"));
 	
+	
+	// 태어나면 자동으로 Controller를 갖도록 하자
+	AutoPossessPlayer = EAutoReceiveInput::Player0;
 }
 
 // Called when the game starts or when spawned

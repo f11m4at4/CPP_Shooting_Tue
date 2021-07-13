@@ -28,7 +28,8 @@ public:
 
 	void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent);
 
-
+	// 사용자가 발사 버튼을 눌렀을 때 호출될 함수
+	void Fire();
 
 	// 필요속성 : 총구, 총알공장
 	UPROPERTY()
@@ -36,5 +37,8 @@ public:
 
 	UPROPERTY(EditDefaultsOnly, Category="Bullet Factory")
 	TSubclassOf<class ABullet> bulletFactory;
+
+	UPROPERTY()
+	class AShootPlayer* me;
 	
 };

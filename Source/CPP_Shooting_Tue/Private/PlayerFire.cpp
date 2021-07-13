@@ -2,6 +2,9 @@
 
 
 #include "PlayerFire.h"
+#include "Bullet.h"
+#include <Components/ArrowComponent.h>
+#include "ShootPlayer.h"
 
 // Sets default values for this component's properties
 UPlayerFire::UPlayerFire()
@@ -19,8 +22,15 @@ void UPlayerFire::BeginPlay()
 {
 	Super::BeginPlay();
 
-	// ...
-	
+	// 총구 가져오기
+	// 1. ShootPlayer 가 있어야한다.
+	// 이 컴포넌트를 소유하고 있는 액터를 반환
+	me = Cast<AShootPlayer>(GetOwner());
+
+	// 2. ShootPlayer 객체에 있는 총구를 가져오고 싶다.
+	auto fp = me->GetDefaultSubobjectByName(TEXT("FirePosition"));
+	// 3. 총구를 내 속성변수인 firePosition 에 할당하고 싶다.
+	firePosition = Cast<UArrowComponent>(fp);
 }
 
 
@@ -34,6 +44,21 @@ void UPlayerFire::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 
 void UPlayerFire::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-	
+	// 사용자의 입력과 처리할 함수를 Binding
+	PlayerInputComponent->BindAction(TEXT("Fire"), IE_Pressed, this, &UPlayerFire::Fire);
+}
+
+// 사용자가 발사 버튼을 눌렀을 때 호출될 함수
+void UPlayerFire::Fire()
+{
+	// 총알을 발사하고 싶다.
+	// 1. 총알이 필요
+	auto bullet = GetWorld()->SpawnActor<ABullet>(bulletFactory);
+	// 2. 총알을 배치
+	if (bullet)
+	{
+		bullet->SetActorLocation(firePosition->GetComponentLocation());
+		bullet->SetActorRotation(firePosition->GetComponentRotation());
+	}
 }
 
