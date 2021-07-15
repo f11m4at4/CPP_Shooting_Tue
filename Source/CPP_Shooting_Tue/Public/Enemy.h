@@ -40,4 +40,15 @@ public:
 	//EnemyMove
 	UPROPERTY(VisibleAnywhere, Category = "EnemyMove")
 	class UEnemyMove* enemyMove;
+
+	UFUNCTION()
+	void OnTriggerEnter(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	// Æø¹ßÈ¿°ú
+	UPROPERTY(EditDefaultsOnly, Category="Explosion Factory")
+	class UParticleSystem* explosionFactory;
+
+	// Æø¹ß»ç¿îµå
+	UPROPERTY(EditDefaultsOnly, Category = "Explosion Sound")
+	class USoundBase* explosionSound;
 };

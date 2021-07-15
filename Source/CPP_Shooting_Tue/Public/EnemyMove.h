@@ -37,4 +37,6 @@ public:
 	// µû¶ó´Ù´Ò Å¸°Ù
 	UPROPERTY()
 	class AActor* target;
+
+	FVector v;
 };
