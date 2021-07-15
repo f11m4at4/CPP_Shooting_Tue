@@ -41,4 +41,7 @@ public:
 	UPROPERTY()
 	class AShootPlayer* me;
 	
+	// ÃÑ¾Ë»ç¿îµå
+	UPROPERTY(EditDefaultsOnly, Category="Bullet Sound")
+	class USoundBase* bulletSound;
 };

@@ -5,6 +5,7 @@
 #include "Bullet.h"
 #include <Components/ArrowComponent.h>
 #include "ShootPlayer.h"
+#include <Kismet/GameplayStatics.h>
 
 // Sets default values for this component's properties
 UPlayerFire::UPlayerFire()
@@ -60,5 +61,8 @@ void UPlayerFire::Fire()
 		bullet->SetActorLocation(firePosition->GetComponentLocation());
 		bullet->SetActorRotation(firePosition->GetComponentRotation());
 	}
+
+	// 총알 사운드 재생
+	UGameplayStatics::PlaySound2D(GetWorld(), bulletSound);
 }
 
