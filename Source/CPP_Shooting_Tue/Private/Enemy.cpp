@@ -42,6 +42,8 @@ void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// ปýธํทย
+	SetLifeSpan(3);
 }
 
 // Called every frame

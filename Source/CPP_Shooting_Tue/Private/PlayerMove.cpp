@@ -39,7 +39,7 @@ void UPlayerMove::TickComponent(float DeltaTime, ELevelTick TickType, FActorComp
 	{
 		FVector P0 = me->GetActorLocation();
 		FVector P = P0 + dir * speed * DeltaTime;
-		me->SetActorLocation(P);
+		me->SetActorLocation(P, true);
 	}
 }
 
@@ -57,5 +57,6 @@ void UPlayerMove::Horizontal(float value)
 void UPlayerMove::Vertical(float value)
 {
 	v = value;
+	PRINTLOG(TEXT("Vertical : %f"), v);
 }
 

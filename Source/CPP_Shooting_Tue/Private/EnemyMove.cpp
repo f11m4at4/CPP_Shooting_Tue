@@ -55,6 +55,6 @@ void UEnemyMove::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompo
 	
 	FVector P = me->GetActorLocation() + v * DeltaTime;
 
-	me->SetActorLocation(P);
+	me->SetActorLocation(P, true);
 }
 
