@@ -27,6 +27,19 @@ class CPP_SHOOTING_TUE_API ACPP_Shooting_TueGameModeBase : public AGameModeBase
 public:
 	ACPP_Shooting_TueGameModeBase();
 
+	virtual void Tick( float DeltaSeconds ) override;
+
 	UPROPERTY(EditAnywhere, Category="FSM", BlueprintReadWrite)
 	EGameState state = EGameState::Ready;
+
+	// 필요속성 : ready 대기시간, 경과시간
+	UPROPERTY(EditAnywhere, Category="FSM")
+	float readyDelayTime = 2;
+
+	UPROPERTY()
+	float currentTime = 0;
+private:
+	void Gameover();
+	void Playing();
+	void Ready();
 };

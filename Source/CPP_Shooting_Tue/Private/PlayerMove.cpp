@@ -3,6 +3,7 @@
 
 #include "PlayerMove.h"
 #include "ShootPlayer.h"
+#include "CPP_Shooting_TueGameModeBase.h"
 
 // Sets default values for this component's properties
 UPlayerMove::UPlayerMove()
@@ -29,6 +30,17 @@ void UPlayerMove::BeginPlay()
 void UPlayerMove::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	// gamemode 의 상태가 Playing 이 아니면
+	// 1. gamemode 가 필요하다.
+	auto gameMode = Cast<ACPP_Shooting_TueGameModeBase>(GetWorld()->GetAuthGameMode());
+	bool isPlaying = gameMode->state != EGameState::Playing;
+	// 2. 조건식이 있어야 한다.
+	if(isPlaying)
+	{
+		// 아래 내용은 처리하고 싶지 않다.
+		return;
+	}
 
 	// 사용자 입력에 따라 상하좌우로 이동하고 싶다.
 	// 1. 방향이 필요
@@ -57,6 +69,5 @@ void UPlayerMove::Horizontal(float value)
 void UPlayerMove::Vertical(float value)
 {
 	v = value;
-	PRINTLOG(TEXT("Vertical : %f"), v);
 }
 

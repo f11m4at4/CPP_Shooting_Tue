@@ -6,6 +6,7 @@
 #include <Components/ArrowComponent.h>
 #include "ShootPlayer.h"
 #include <Kismet/GameplayStatics.h>
+#include "CPP_Shooting_TueGameModeBase.h"
 
 // Sets default values for this component's properties
 UPlayerFire::UPlayerFire()
@@ -52,6 +53,15 @@ void UPlayerFire::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 // 사용자가 발사 버튼을 눌렀을 때 호출될 함수
 void UPlayerFire::Fire()
 {
+	auto gameMode = Cast<ACPP_Shooting_TueGameModeBase>(GetWorld()->GetAuthGameMode());
+	bool isPlaying = gameMode->state != EGameState::Playing;
+	// 2. 조건식이 있어야 한다.
+	if (isPlaying)
+	{
+		// 아래 내용은 처리하고 싶지 않다.
+		return;
+	}
+
 	// 총알을 발사하고 싶다.
 	// 1. 총알이 필요
 	auto bullet = GetWorld()->SpawnActor<ABullet>(bulletFactory);
