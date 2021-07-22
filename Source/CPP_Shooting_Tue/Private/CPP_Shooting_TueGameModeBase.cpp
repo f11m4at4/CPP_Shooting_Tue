@@ -5,6 +5,7 @@
 #include <Components/BoxComponent.h>
 #include "CPP_Shooting_Tue.h"
 #include <Blueprint/UserWidget.h>
+#include <Kismet/GameplayStatics.h>
 
 
 ACPP_Shooting_TueGameModeBase::ACPP_Shooting_TueGameModeBase()
@@ -78,6 +79,11 @@ void ACPP_Shooting_TueGameModeBase::Tick(float DeltaSeconds)
 // 게임오버 됐을 때 처리할 함수
 void ACPP_Shooting_TueGameModeBase::OnGameoverProcess()
 {
+	// 마우스커서 보이도록 처리
+	GetWorld()->GetFirstPlayerController()->bShowMouseCursor = true;
+	// 게임일시정지
+	UGameplayStatics::SetGamePaused(GetWorld(), true);
+
 	// 상태를 gameover 로 전환
 	state = EGameState::Gameover;
 	// gameover UI 띄우기
