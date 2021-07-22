@@ -33,6 +33,10 @@ public:
 
 	virtual void Tick( float DeltaSeconds ) override;
 
+	// 게임오버 됐을 때 처리할 함수
+	void OnGameoverProcess();
+
+
 	UPROPERTY(EditAnywhere, Category="FSM", BlueprintReadWrite)
 	EGameState state = EGameState::Ready;
 
@@ -51,6 +55,26 @@ public:
 	// readyui 인스턴스 캐싱
 	UPROPERTY()
 	class UUserWidget* readyUI;
+
+	// PlayingUI 공장
+	UPROPERTY(EditDefaultsOnly, Category = UI)
+	TSubclassOf<class UUserWidget> playingUIFactory;
+
+	// PlayingUI 인스턴스 캐싱
+	UPROPERTY()
+	class UUserWidget* playingUI;
+
+	// gameoverUI 공장
+	UPROPERTY(EditDefaultsOnly, Category = UI)
+	TSubclassOf<class UUserWidget> gameoverUIFactory;
+
+	// gameoverUI 인스턴스 캐싱
+	UPROPERTY()
+	class UUserWidget* gameoverUI;
+
+	// 필요속성 : 일정시간(대기시간)
+	UPROPERTY(EditDefaultsOnly, Category=UI)
+	float playingUITime = 1;
 
 private:
 	void Gameover();

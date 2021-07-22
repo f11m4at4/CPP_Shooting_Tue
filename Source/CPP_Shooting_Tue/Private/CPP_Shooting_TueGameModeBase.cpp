@@ -28,6 +28,15 @@ void ACPP_Shooting_TueGameModeBase::InitGameState()
 		readyUI = CreateWidget<UUserWidget>(GetWorld(), readyUIFactory);
 	}
 
+	if (playingUI == nullptr)
+	{
+		playingUI = CreateWidget<UUserWidget>(GetWorld(), playingUIFactory);
+	}
+	if (gameoverUI == nullptr)
+	{
+		gameoverUI = CreateWidget<UUserWidget>(GetWorld(), gameoverUIFactory);
+	}
+
 	// readyui 화면의 띄우기
 	if (readyUI)
 	{
@@ -66,6 +75,14 @@ void ACPP_Shooting_TueGameModeBase::Tick(float DeltaSeconds)
 	}
 }
 
+// 게임오버 됐을 때 처리할 함수
+void ACPP_Shooting_TueGameModeBase::OnGameoverProcess()
+{
+	// 상태를 gameover 로 전환
+	state = EGameState::Gameover;
+	// gameover UI 띄우기
+	gameoverUI->AddToViewport();
+}
 
 // 본문 함수들로 구성
 // 일정시간이 지나면 상태를 Playing 으로 전환하고 싶다.
@@ -82,14 +99,31 @@ void ACPP_Shooting_TueGameModeBase::Ready()
 		// 3. 상태를 Playing 으로 전환하고 싶다.
 		state = EGameState::Playing;
 
+		// readyui 제거하기
+		readyUI->RemoveFromViewport();
+		
+		playingUI->AddToViewport();
+
 		currentTime = 0;
 	}
 }
 
 // ui 띄우거나... 
+// 일정시간이 지나면 playing ui 안보이게 하자
+// 필요속성 : 일정시간(대기시간)
 void ACPP_Shooting_TueGameModeBase::Playing()
 {
-
+	// 일정시간이 지나면 playing ui 안보이게 하자
+	// 1. 시간이 흘렀으니까
+	currentTime += GetWorld()->DeltaTimeSeconds;
+	// playing ui 가 화면에 보이고 
+	// 2. 일정시간이 됐으니까
+	if (playingUI->IsInViewport() && currentTime > playingUITime)
+	{
+		// 3. plyaingui 안보이게 하고싶다.
+		playingUI->RemoveFromViewport();
+		currentTime = 0;
+	}
 }
 
 void ACPP_Shooting_TueGameModeBase::Gameover()
