@@ -4,11 +4,37 @@
 #include "CPP_Shooting_TueGameModeBase.h"
 #include <Components/BoxComponent.h>
 #include "CPP_Shooting_Tue.h"
+#include <Blueprint/UserWidget.h>
 
 
 ACPP_Shooting_TueGameModeBase::ACPP_Shooting_TueGameModeBase()
 {
 	PrimaryActorTick.bCanEverTick = true;
+}
+
+void ACPP_Shooting_TueGameModeBase::BeginPlay()
+{
+	Super::BeginPlay();
+
+}
+
+void ACPP_Shooting_TueGameModeBase::InitGameState()
+{
+	Super::InitGameState();
+	
+	// readyui 생성
+	if (readyUI == nullptr)
+	{
+		readyUI = CreateWidget<UUserWidget>(GetWorld(), readyUIFactory);
+	}
+
+	// readyui 화면의 띄우기
+	if (readyUI)
+	{
+		readyUI->AddToViewport();
+	}
+	// 상태를 ready 설정해주기
+	state = EGameState::Ready;
 }
 
 void ACPP_Shooting_TueGameModeBase::Tick(float DeltaSeconds)

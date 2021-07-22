@@ -7,6 +7,8 @@
 #include <Components/ArrowComponent.h>
 #include "EnemyMove.h"
 #include <Kismet/GameplayStatics.h>
+#include "ShootPlayer.h"
+#include "CPP_Shooting_TueGameModeBase.h"
 
 // Sets default values
 AEnemy::AEnemy()
@@ -43,7 +45,7 @@ void AEnemy::BeginPlay()
 	Super::BeginPlay();
 	
 	// 생명력
-	SetLifeSpan(3);
+	//SetLifeSpan(3);
 }
 
 // Called every frame
@@ -74,7 +76,15 @@ void AEnemy::OnTriggerEnter(UPrimitiveComponent* OverlappedComponent, AActor* Ot
 	//	// 처리하지 않겠다.
 	//	return;
 	//}
-	// 
+	 
+	// 부딪힌 녀석이 Player 라면 상태를 gameover 로 전환하고 싶다. 
+	auto player = Cast<AShootPlayer>(OtherActor);
+	if (player)
+	{
+		auto gameMode = Cast<ACPP_Shooting_TueGameModeBase>(GetWorld()->GetAuthGameMode());
+		gameMode->state = EGameState::Gameover;
+	}
+
 	// 폭발효과 재생
 	UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), explosionFactory, GetTransform());
 

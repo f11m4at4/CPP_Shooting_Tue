@@ -27,6 +27,10 @@ class CPP_SHOOTING_TUE_API ACPP_Shooting_TueGameModeBase : public AGameModeBase
 public:
 	ACPP_Shooting_TueGameModeBase();
 
+	virtual void BeginPlay() override;
+
+	virtual void InitGameState() override;
+
 	virtual void Tick( float DeltaSeconds ) override;
 
 	UPROPERTY(EditAnywhere, Category="FSM", BlueprintReadWrite)
@@ -38,6 +42,16 @@ public:
 
 	UPROPERTY()
 	float currentTime = 0;
+
+
+	// ReadyUI 공장
+	UPROPERTY(EditDefaultsOnly, Category=UI)
+	TSubclassOf<class UUserWidget> readyUIFactory;
+
+	// readyui 인스턴스 캐싱
+	UPROPERTY()
+	class UUserWidget* readyUI;
+
 private:
 	void Gameover();
 	void Playing();
